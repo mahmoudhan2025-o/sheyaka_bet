@@ -18,7 +18,7 @@ class AppConfig {
   static const String productsCsvUrl =
       "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MlbyiyWcpPPqdzFyF8yOP21xKMK6emc63s_6peyXIXSHWG6H-G9MrST7dD9oyqXgA5MfeHM70XG3/pub?output=csv";
   static const String reviewsApiUrl =
-      "https://script.google.com/macros/s/AKfycby-MlcHh6w089NxlcUGziJPto4I5oTwYf4GcYPKFZI3R2Z-ZJIDJZJ_yR-rx1JJ7LbHyA/exec";
+      "https://script.google.com/macros/s/AKfycbyUhaXAYEWKmLbCuzRCMgrfTPjDUuEt_O2lJeaWPMBG_zIw0MUl5VfwFYhoDBSBpsnDgA/exec";
 }
 
 class Product {
@@ -710,15 +710,12 @@ class _ProductCardState extends State<ProductCard> {
     setState(() => _isSubmitting = true);
 
     try {
-      await http.post(
-        Uri.parse(AppConfig.reviewsApiUrl),
-        headers: {'Content-Type': 'text/plain'},
-        body: jsonEncode({
-          'productName': widget.name,
-          'rating': _userRating,
-          'comment': _commentController.text,
-        }),
-      );
+      final uri = Uri.parse(AppConfig.reviewsApiUrl).replace(queryParameters: {
+        'productName': widget.name,
+        'rating': _userRating.toString(),
+        'comment': _commentController.text,
+      });
+      await http.get(uri);
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
