@@ -749,8 +749,8 @@ class _ProductCardState extends State<ProductCard> {
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('حدث خطأ أثناء الاتصال. تأكد من الإنترنت.'),
+            SnackBar(
+              content: Text('الخطأ: $errorStr'),
               backgroundColor: Colors.red,
             ),
           );
