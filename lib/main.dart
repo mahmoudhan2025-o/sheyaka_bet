@@ -687,7 +687,6 @@ class ProductCard extends StatefulWidget {
 
 class _ProductCardState extends State<ProductCard> {
   bool _isHovering = false;
-  int _userRating = 0;
   final TextEditingController _commentController = TextEditingController();
   bool _isSubmitting = false;
 
@@ -698,10 +697,10 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   Future<void> _submitReview() async {
-    if (_userRating == 0 && _commentController.text.isEmpty) {
+    if (_commentController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('الرجاء إضافة تقييم أو تعليق قبل الإرسال'),
+          content: Text('الرجاء إضافة تعليق قبل الإرسال'),
         ),
       );
       return;
@@ -712,7 +711,7 @@ class _ProductCardState extends State<ProductCard> {
     try {
       final uri = Uri.parse(AppConfig.reviewsApiUrl).replace(queryParameters: {
         'productName': widget.name,
-        'rating': _userRating.toString(),
+        'rating': '',
         'comment': _commentController.text,
       });
       await http.get(uri);
@@ -725,7 +724,6 @@ class _ProductCardState extends State<ProductCard> {
           ),
         );
         setState(() {
-          _userRating = 0;
           _commentController.clear();
         });
       }
@@ -744,7 +742,6 @@ class _ProductCardState extends State<ProductCard> {
             ),
           );
           setState(() {
-            _userRating = 0;
             _commentController.clear();
           });
         } else {
@@ -1006,7 +1003,7 @@ class _ProductCardState extends State<ProductCard> {
                 ).copyWith(dividerColor: Colors.transparent),
                 child: ExpansionTile(
                   title: const Text(
-                    'التعليقات والتقييم',
+                    'إضافة تعليق',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -1020,22 +1017,6 @@ class _ProductCardState extends State<ProductCard> {
                     bottom: 12,
                   ),
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(5, (index) {
-                        return GestureDetector(
-                          onTap: () => setState(() => _userRating = index + 1),
-                          child: Icon(
-                            index < _userRating
-                                ? Icons.star
-                                : Icons.star_border,
-                            color: Colors.amber,
-                            size: 28,
-                          ),
-                        );
-                      }),
-                    ),
-                    const SizedBox(height: 12),
                     Row(
                       children: [
                         Expanded(
