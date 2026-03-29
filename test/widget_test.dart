@@ -13,9 +13,10 @@ void main() {
   testWidgets('App loads smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const SheyakaApp());
+    await tester.pumpAndSettle(); // التأكد من انتهاء جميع الرسوم المتحركة قبل بدء الفحص
 
     // Verify that the app loads without crashing
     expect(find.text('شياكة بيت ✨'), findsOneWidget);
-    expect(find.text('اختياراتنا لأفضل أدوات تنظيم المنزل العصرية'), findsOneWidget);
+    expect(find.text('اختيارك لأفضل أدوات تنظيم المنزل العصرية'), findsOneWidget);
   });
 }
