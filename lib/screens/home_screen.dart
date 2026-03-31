@@ -54,7 +54,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             child: const Center(
               child: Text(
-                'عروض خاصة هذا الأسبوع!',
+                'عروض خاصة !',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -342,7 +342,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           const Padding(
                             padding: EdgeInsets.all(20.0),
                             child: Text(
-                              "اختياراتنا لأفضل أدوات تنظيم المنزل العصرية",
+                              "مع القرش مش هيضيع منك قرش ",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,
@@ -740,7 +740,7 @@ class _ProductCardState extends State<ProductCard> {
                     ],
                   ),
                 ),
-              // زر الشراء والمشاركة
+              // زر الشراء وواتساب والمشاركة
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Row(
@@ -770,7 +770,32 @@ class _ProductCardState extends State<ProductCard> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 6),
+                    // زر الواتساب
+                    Material(
+                      color: Colors.green[600],
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          final whatsappUrl = Uri.parse(
+                            'https://wa.me/201020406963?text=${Uri.encodeComponent("أهلاً، أريد الاستفسار عن المنتج: ${widget.name}")}',
+                          );
+                          launchUrl(whatsappUrl);
+                        },
+                        splashColor: Colors.white.withValues(alpha: 0.3),
+                        highlightColor: Colors.green[700],
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          alignment: Alignment.center,
+                          child: const Icon(
+                            Icons.chat,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.share, color: Colors.brown),
                       tooltip: 'خيارات المشاركة',
@@ -780,7 +805,7 @@ class _ProductCardState extends State<ProductCard> {
                         if (value == 'share') {
                           SharePlus.instance.share(
                             ShareParams(
-                              text: 'شوف المنتج ده على شياكة بيت: $productUrl',
+                              text: 'شوف المنتج ده على شياكة : $productUrl',
                             ),
                           );
                         } else if (value == 'copy') {
@@ -942,7 +967,7 @@ class ProductDetailsPage extends StatelessWidget {
                   'https://mahmoudhan2025-o.github.io/sheyaka_bet/#/product/${product.name.hashCode.abs()}';
               if (value == 'share') {
                 SharePlus.instance.share(
-                  ShareParams(text: 'شوف المنتج ده على شياكة بيت: $productUrl'),
+                  ShareParams(text: 'شوف المنتج ده على شياكة : $productUrl'),
                 );
               } else if (value == 'copy') {
                 await Clipboard.setData(ClipboardData(text: productUrl));
@@ -1246,24 +1271,59 @@ class ProductDetailsPage extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: SizedBox(
-            height: 50,
-            child: ElevatedButton.icon(
-              onPressed: () => launchUrl(Uri.parse(product.link)),
-              icon: const Icon(Icons.shopping_cart),
-              label: const Text(
-                'اشتري الآن',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.brown,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton.icon(
+                    onPressed: () => launchUrl(Uri.parse(product.link)),
+                    icon: const Icon(Icons.shopping_cart),
+                    label: const Text(
+                      'اشتري الآن',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.brown,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 4,
+                    ),
+                  ),
                 ),
-                elevation: 4, // لإضافة بروز خفيف للزر
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      final whatsappUrl = Uri.parse(
+                        'https://wa.me/201020406963?text=${Uri.encodeComponent("أهلاً، أريد الاستفسار عن المنتج: ${product.name}")}',
+                      );
+                      launchUrl(whatsappUrl);
+                    },
+                    icon: const Icon(Icons.chat, size: 22),
+                    label: const Text(
+                      'واتساب',
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[600],
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 4,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
