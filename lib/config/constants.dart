@@ -7,10 +7,10 @@ class AppConstants {
   // ============================================================================
 
   /// رابط جلب المنتجات من Google Sheets
-  static String get productsCsvUrl => dotenv.env['PRODUCTS_CSV_URL'] ?? '';
+  static String get productsCsvUrl => dotenv.env['PRODUCTS_CSV_URL'] ?? 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7MlbyiyWcpPPqdzFyF8yOP21xKMK6emc63s_6peyXIXSHWG6H-G9MrST7dD9oyqXgA5MfeHM70XG3/pub?output=csv';
 
   /// رابط إرسال التقييمات (Google Apps Script)
-  static String get reviewsApiUrl => dotenv.env['REVIEWS_API_URL'] ?? '';
+  static String get reviewsApiUrl => dotenv.env['REVIEWS_API_URL'] ?? 'https://script.google.com/macros/s/AKfycbyUhaXAYEWKmLbCuzRCMgrfTPjDUuEt_O2lJeaWPMBG_zIw0MUl5VfwFYhoDBSBpsnDgA/exec';
 
   // ============================================================================
   // WhatsApp

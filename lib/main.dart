@@ -35,7 +35,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // تحميل ملف المتغيرات البيئية
-  await dotenv.load(fileName: ".env");
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    debugPrint("⚠️ تعذر تحميل ملف .env. سيتم استخدام الروابط الافتراضية.");
+  }
 
   runApp(ProviderScope(observers: [AppObserver()], child: const SheyakaApp()));
 }
