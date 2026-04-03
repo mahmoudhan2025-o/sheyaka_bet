@@ -33,6 +33,22 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Flutter Web build artifacts (deployed via GitHub Actions)
+main.dart.js
+main.dart.wasm
+main.dart.wasm.map
+flutter.js
+flutter_bootstrap.js
+flutter_service_worker.js
+/assets/
+/canvaskit/
+favicon.png
+index.html
+manifest.json
+version.json
+/icons/
+/web/
+
 # Symbolication related
 app.*.symbols
 
