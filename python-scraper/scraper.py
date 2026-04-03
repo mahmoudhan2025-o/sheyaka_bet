@@ -118,15 +118,12 @@ def scrape_amazon_product(url, session):
 
         print("تم سحب البيانات بنجاح.")
         
-        # تحويل الرابط إلى دالة صورة ليتم عرضها داخل الخلية في جوجل شيت
-        sheet_image = f'=IMAGE("{image_url}")' if image_url != 'Image not found' and image_url.startswith('http') else image_url
-        
         # حماية البيانات من ثغرة حقن المعادلات (Formula Injection) في جوجل شيت
         safe_title = f"'{title}" if title.startswith(('=', '+', '-', '@')) else title
         safe_description = f"'{description}" if description.startswith(('=', '+', '-', '@')) else description
 
         # الترتيب الجديد: العنوان، رابط الصورة، رابط المنتج، السعر، التقييم، نسبة الخصم، القسم، الوصف
-        return [safe_title, sheet_image, url, price, rating, discount, category, safe_description]
+        return [safe_title, image_url, url, price, rating, discount, category, safe_description]
         
     except Exception as e:
         print(f"حدث خطأ أثناء عملية السحب: {e}")
