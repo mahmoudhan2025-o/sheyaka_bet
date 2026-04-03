@@ -5006,6 +5006,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
+<<<<<<< HEAD
 flutter_dotenv
 
 The MIT License (MIT)
@@ -5031,6 +5032,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
+=======
+>>>>>>> af9dd1b425be28f39899070b8aad3656cd423153
 flutter_lints
 path_provider
 path_provider_linux
@@ -5068,6 +5071,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
+<<<<<<< HEAD
 flutter_riverpod
 riverpod
 state_notifier
@@ -5094,6 +5098,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --------------------------------------------------------------------------------
+=======
+>>>>>>> af9dd1b425be28f39899070b8aad3656cd423153
 freetype2
 
 
