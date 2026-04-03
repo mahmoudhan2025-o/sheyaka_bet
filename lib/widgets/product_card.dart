@@ -257,6 +257,68 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                         ),
                       ),
                     ),
+                    // علامة نوع المنتج (أمازون، واتساب، إلخ)
+                    if (widget.product.productType != 'external')
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: widget.product.productType == 'amazon'
+                                ? Colors.orange
+                                : (widget.product.productType == 'noon'
+                                    ? Colors.yellow.shade700
+                                    : (widget.product.productType == 'jumia'
+                                        ? Colors.orange.shade800
+                                        : Colors.green)), // للواتساب (محلي)
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                widget.product.productType == 'amazon' ||
+                                        widget.product.productType == 'noon' ||
+                                        widget.product.productType == 'jumia'
+                                    ? Icons.shopping_bag
+                                    : Icons.local_shipping, // محلي
+                                color: widget.product.productType == 'noon'
+                                    ? Colors.black87
+                                    : Colors.white,
+                                size: 14,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                widget.product.productType == 'amazon'
+                                    ? 'من أمازون'
+                                    : (widget.product.productType == 'noon'
+                                        ? 'من نون'
+                                        : (widget.product.productType == 'jumia'
+                                            ? 'من جوميا'
+                                            : 'توصيل سريع')),
+                                style: GoogleFonts.cairo(
+                                  color: widget.product.productType == 'noon'
+                                      ? Colors.black87
+                                      : Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     // عرض علامة التخفيض
                     if (widget.product.discount.isNotEmpty)
                       Positioned(
@@ -357,55 +419,50 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                     // زر الشراء
                     Expanded(
                       child: Material(
-                        color: Colors.brown,
+                        color: widget.product.productType == 'whatsapp' 
+                            ? Colors.green 
+                            : (widget.product.productType == 'amazon' ? Colors.orange.shade800 : Colors.brown),
                         borderRadius: BorderRadius.circular(10),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(10),
-                          onTap: () {
-                            launchUrl(Uri.parse(widget.product.link));
+                          onTap: () async {
+                            if (widget.product.productType == 'whatsapp') {
+                              await ChatService.openWhatsApp(widget.product.name);
+                            } else {
+                              launchUrl(Uri.parse(widget.product.link));
+                            }
                           },
                           splashColor: Colors.white.withValues(alpha: 0.3),
-                          highlightColor: Colors.brown[700],
+                          highlightColor: widget.product.productType == 'whatsapp' 
+                              ? Colors.green[700] 
+                              : Colors.brown[700],
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,
-                            child: const Text(
-                              "اشتري الآن",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                if (widget.product.productType == 'whatsapp')
+                                  const Icon(Icons.whatsapp, color: Colors.white, size: 18),
+                                if (widget.product.productType == 'whatsapp')
+                                  const SizedBox(width: 4),
+                                Text(
+                                  widget.product.productType == 'amazon' 
+                                      ? "شراء من أمازون" 
+                                      : (widget.product.productType == 'whatsapp' ? "اطلب الآن" : "اشتري الآن"),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(width: 6),
-                    // زر الواتساب
-                    Material(
-                      color: Colors.green[600],
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: () async {
-                          await ChatService.openWhatsApp(widget.product.name);
-                        },
-                        splashColor: Colors.white.withValues(alpha: 0.3),
-                        highlightColor: Colors.green[700],
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 8,
-                          ),
-                          alignment: Alignment.center,
-                          child: const Icon(
-                            Icons.chat,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // زر المشاركة (تم إزالة زر الواتساب المنفصل لأنه تم دمجه)
                     // قائمة المشاركة
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.share, color: Colors.brown),
