@@ -5,6 +5,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../models/product.dart';
 import '../services/product_providers.dart';
@@ -244,13 +246,13 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                           fit: BoxFit.contain,
                           placeholder: (context, url) => const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.brown,
+                              color: Color.fromARGB(255, 63, 200, 235),
                             ),
                           ),
                           errorWidget: (context, url, error) => const Center(
                             child: Icon(
                               Icons.broken_image_outlined,
-                              color: Colors.grey,
+                              color: Color.fromARGB(255, 3, 30, 80),
                               size: 40,
                             ),
                           ),
@@ -435,7 +437,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                           splashColor: Colors.white.withValues(alpha: 0.3),
                           highlightColor: widget.product.productType == 'whatsapp' 
                               ? Colors.green[700] 
-                              : Colors.brown[700],
+                              : const Color.fromARGB(255, 61, 237, 243),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             alignment: Alignment.center,
@@ -443,7 +445,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 if (widget.product.productType == 'whatsapp')
-                                  const Icon(Icons.whatsapp, color: Colors.white, size: 18),
+                                  const Icon(FontAwesomeIcons.whatsapp, color: Colors.white, size: 18),
                                 if (widget.product.productType == 'whatsapp')
                                   const SizedBox(width: 4),
                                 Text(
@@ -462,8 +464,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    // زر المشاركة (تم إزالة زر الواتساب المنفصل لأنه تم دمجه)
-                    // قائمة المشاركة
+                    // زر المشاركة
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.share, color: Colors.brown),
                       tooltip: 'خيارات المشاركة',
